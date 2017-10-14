@@ -1,0 +1,6 @@
+C:\My Files\Projects\StockTicker\StockTickerLogic\StockTickerLogic\bin\Debug\StockTickerLogic.exe.config
+C:\My Files\Projects\StockTicker\StockTickerLogic\StockTickerLogic\bin\Debug\StockTickerLogic.exe
+C:\My Files\Projects\StockTicker\StockTickerLogic\StockTickerLogic\bin\Debug\StockTickerLogic.pdb
+C:\My Files\Projects\StockTicker\StockTickerLogic\StockTickerLogic\obj\Debug\StockTickerLogic.csprojResolveAssemblyReference.cache
+C:\My Files\Projects\StockTicker\StockTickerLogic\StockTickerLogic\obj\Debug\StockTickerLogic.exe
+C:\My Files\Projects\StockTicker\StockTickerLogic\StockTickerLogic\obj\Debug\StockTickerLogic.pdb

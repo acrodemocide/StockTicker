@@ -43,7 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Market.cs" />
+    <Compile Include="Game.cs" />
+    <Compile Include="IObserver.cs" />
+    <Compile Include="ISubject.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

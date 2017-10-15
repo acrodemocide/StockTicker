@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace StockTickerLogic
 {
-    class StockMarket
+    class StockMarket : ISubject
     {
+        private List<IObserver> _observers;
         private Dictionary<StockId, Stock> _stocks;
         public static StockMarket instance = null;
 
@@ -71,12 +72,28 @@ namespace StockTickerLogic
             }
             else if (action == DIVIDENDS)
             {
-                // TODO: Implement
+                NotifyObservers(id, amount);
             }
             else if (action == DOWN)
             {
                 _stocks[id].Value -= amount;
             }
+        }
+
+        public void RegisterObserver(IObserver observer)
+        {
+            _observers.Add(observer);
+        }
+        public void RemoveObserver(IObserver observer)
+        {
+            _observers.Remove(observer);
+        }
+        public void NotifyObservers(StockId stockId, int dividendAmount)
+        {
+            foreach(IObserver observer in _observers)
+            {
+                observer.Update(stockId, dividendAmount);
+            }j
         }
     }
 }

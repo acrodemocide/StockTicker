@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StockTickerLogic
 {
-    class Player
+    class Player : IObserver
     {
         private string _name;
         private Dictionary<StockId, StockPosition> _portfolio;
@@ -74,6 +74,11 @@ namespace StockTickerLogic
                 totalValue += entry.Value.GetTotalValue();
             }
             return totalValue;
+        }
+
+        public void Update(StockId stockId, int dividendAmount)
+        {
+            CollectDividends(stockId, dividendAmount);
         }
     }
 }

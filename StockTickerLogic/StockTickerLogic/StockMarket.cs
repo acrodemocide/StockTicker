@@ -8,9 +8,10 @@ namespace StockTickerLogic
 {
     class StockMarket : ISubject
     {
+        private const int DIVIDEND_MIN_VALUE = 1000;
         private List<IObserver> _observers;
         private Dictionary<StockId, Stock> _stocks;
-        public static StockMarket instance = null;
+        private static StockMarket instance = null;
 
         private StockMarket()
         {
@@ -23,7 +24,7 @@ namespace StockTickerLogic
             _stocks[StockId.GRAIN] = Stock.GetStockInstance(StockId.GRAIN);
         }
 
-        public StockMarket GetStocksBoard()
+        public static StockMarket GetStockBoard()
         {
             if (instance == null)
             {
@@ -70,7 +71,7 @@ namespace StockTickerLogic
             {
                 _stocks[id].Value += amount;
             }
-            else if (action == DIVIDENDS)
+            else if (action == DIVIDENDS && _stocks[id].Value >= DIVIDEND_MIN_VALUE)
             {
                 NotifyObservers(id, amount);
             }
@@ -93,7 +94,16 @@ namespace StockTickerLogic
             foreach(IObserver observer in _observers)
             {
                 observer.Update(stockId, dividendAmount);
-            }j
+            }
+        }
+
+        public void Reset()
+        {
+            _observers.Clear();
+            foreach(KeyValuePair<StockId, Stock> entry in _stocks)
+            {
+                entry.Value.Reset();
+            }
         }
     }
 }

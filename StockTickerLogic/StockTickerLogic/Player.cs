@@ -80,5 +80,10 @@ namespace StockTickerLogic
         {
             CollectDividends(stockId, dividendAmount);
         }
+
+        public string GetName()
+        {
+            return _name;
+        }
     }
 }

@@ -39,5 +39,10 @@ namespace StockTickerLogic
                 _value = value;
             }
         }
+
+        public void Reset()
+        {
+            _value = START_VALUE;
+        }
     }
 }

@@ -1,0 +1,7 @@
+C:\My Files\Projects\StockTicker\StockTickerLogic\StockTickerTest\bin\Debug\StockTickerTest.dll
+C:\My Files\Projects\StockTicker\StockTickerLogic\StockTickerTest\bin\Debug\StockTickerTest.pdb
+C:\My Files\Projects\StockTicker\StockTickerLogic\StockTickerTest\bin\Debug\StockTickerLogic.exe
+C:\My Files\Projects\StockTicker\StockTickerLogic\StockTickerTest\bin\Debug\StockTickerLogic.pdb
+C:\My Files\Projects\StockTicker\StockTickerLogic\StockTickerTest\obj\Debug\StockTickerTest.csprojResolveAssemblyReference.cache
+C:\My Files\Projects\StockTicker\StockTickerLogic\StockTickerTest\obj\Debug\StockTickerTest.dll
+C:\My Files\Projects\StockTicker\StockTickerLogic\StockTickerTest\obj\Debug\StockTickerTest.pdb

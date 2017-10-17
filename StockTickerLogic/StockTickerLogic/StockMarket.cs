@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StockTickerLogic
 {
@@ -15,6 +12,7 @@ namespace StockTickerLogic
 
         private StockMarket()
         {
+            _observers = new List<IObserver>();
             _stocks = new Dictionary<StockId, Stock>();
             _stocks[StockId.GOLD] = Stock.GetStockInstance(StockId.GOLD);
             _stocks[StockId.SILVER] = Stock.GetStockInstance(StockId.SILVER);

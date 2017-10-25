@@ -73,6 +73,13 @@ namespace StockTickerLogic
             return totalValue;
         }
 
+        /// <summary>
+        /// Observer pattern update method. This is to update the
+        /// dividends that the player collects when the stock market
+        /// pays dividends
+        /// </summary>
+        /// <param name="stockId">Id of stock paying dividends</param>
+        /// <param name="dividendAmount">number of dividends paid</param>
         public void Update(StockId stockId, int dividendAmount)
         {
             CollectDividends(stockId, dividendAmount);

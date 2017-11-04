@@ -10,6 +10,7 @@ namespace StockTickerLogic
     {
         private Stock _stockOwned;
         private int _numberOwned;
+        private const int _DIVIDEND_MULTIPLIER = 10;
 
         public StockPosition(StockId id)
         {
@@ -29,7 +30,7 @@ namespace StockTickerLogic
 
         public int GetDividenPayout(int dividendAmount)
         {
-            return dividendAmount * _numberOwned;
+            return dividendAmount * _DIVIDEND_MULTIPLIER * _numberOwned;
         }
 
         public int NumberOwned

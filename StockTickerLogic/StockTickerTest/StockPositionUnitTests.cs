@@ -49,34 +49,40 @@ namespace StockTickerTest
         [TestMethod]
         public void GetDividendPayoutReturnsCorrectValueForOneStockOwned()
         {
-            int numberOwned = 1;
-            int dividendAmount = 10;
+            const int NUMBER_OWNED = 1;
+            const int DIVIDEND_AMOUNT = 10;
+            const int DIVIDEND_MULTIPLIER = 10;
+            const int EXPECTED_DIVIDEND_PAYOUT = DIVIDEND_AMOUNT * DIVIDEND_MULTIPLIER * NUMBER_OWNED;
             StockPosition stockPostion = new StockPosition(StockId.BONDS);
-            stockPostion.NumberOwned = numberOwned;
-            var dividendPayout = stockPostion.GetDividenPayout(dividendAmount);
-            Assert.AreEqual(dividendPayout, dividendAmount * numberOwned);
+            stockPostion.NumberOwned = NUMBER_OWNED;
+            var dividendPayout = stockPostion.GetDividenPayout(DIVIDEND_AMOUNT);
+            Assert.AreEqual(dividendPayout, EXPECTED_DIVIDEND_PAYOUT);
         }
 
         [TestMethod]
         public void GetDividendPayoutReturnsCorrectValueForTwoStocksOwned()
         {
-            int numberOwned = 2;
-            int dividendAmount = 10;
+            const int NUMBER_OWNED = 2;
+            const int DIVIDEND_AMOUNT = 10;
+            const int DIVIDEND_MULTIPLIER = 10;
+            const int EXPECTED_DIVIDEND_PAYOUT = DIVIDEND_AMOUNT * DIVIDEND_MULTIPLIER * NUMBER_OWNED; 
             StockPosition stockPostion = new StockPosition(StockId.BONDS);
-            stockPostion.NumberOwned = numberOwned;
-            var dividendPayout = stockPostion.GetDividenPayout(dividendAmount);
-            Assert.AreEqual(dividendPayout, dividendAmount * numberOwned);
+            stockPostion.NumberOwned = NUMBER_OWNED;
+            var dividendPayout = stockPostion.GetDividenPayout(DIVIDEND_AMOUNT);
+            Assert.AreEqual(dividendPayout, EXPECTED_DIVIDEND_PAYOUT);
         }
 
         [TestMethod]
         public void GetDividendPayoutReturnsCorrectValueForThreeStocksOwned()
         {
-            int numberOwned = 3;
-            int dividendAmount = 10;
+            const int NUMBER_OWNED = 3;
+            const int DIVIDEND_AMOUNT = 10;
+            const int DIVIDEND_MULTIPLIER = 10;
+            const int EXPECTED_DIVIDEND_PAYOUT = DIVIDEND_AMOUNT * DIVIDEND_MULTIPLIER * NUMBER_OWNED;
             StockPosition stockPostion = new StockPosition(StockId.BONDS);
-            stockPostion.NumberOwned = numberOwned;
-            var dividendPayout = stockPostion.GetDividenPayout(dividendAmount);
-            Assert.AreEqual(dividendPayout, dividendAmount * numberOwned);
+            stockPostion.NumberOwned = NUMBER_OWNED;
+            var dividendPayout = stockPostion.GetDividenPayout(DIVIDEND_AMOUNT);
+            Assert.AreEqual(dividendPayout, EXPECTED_DIVIDEND_PAYOUT);
         }
     }
 }

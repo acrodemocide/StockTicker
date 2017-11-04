@@ -357,5 +357,70 @@ namespace StockTickerTest
                 Assert.AreEqual(ex.Message, ERROR_MESSAGE);
             }
         }
+
+        [TestMethod]
+        public void PlayerCollectsNoDividendsWhenDividendStockNotOwned()
+        {
+            const int TOTAL_CASH = 5000;
+            const int TOTAL_NET_WORTH = 5000;
+            const int DIVIDEND_AMOUNT = 20;
+            string playerName = "Cool Guy";
+            Player player = new Player(playerName);
+
+            player.CollectDividends(StockId.BONDS, DIVIDEND_AMOUNT);
+
+            Assert.AreEqual(player.GetCashValue(), TOTAL_CASH);
+            Assert.AreEqual(player.GetNetWorth(), TOTAL_NET_WORTH);
+        }
+
+        [TestMethod]
+        public void PlayerCollectsCorrectDividendsWhenOneDividendStockOwned()
+        {
+            const int FINAL_CASH = 4200;
+            const int FINAL_NET_WORTH = 5200;
+            const int DIVIDEND_AMOUNT = 20;
+            const int NUM_POSITIONS_TO_BUY = 1;
+            StockId purchaseStock = StockId.BONDS;
+            string playerName = "Cool Guy";
+            Player player = new Player(playerName);
+
+            try
+            {
+                player.BuyPosition(purchaseStock, NUM_POSITIONS_TO_BUY);
+            }
+            catch(ArgumentException)
+            {
+                Assert.Fail();
+            }
+            player.CollectDividends(purchaseStock, DIVIDEND_AMOUNT);
+
+            Assert.AreEqual(player.GetCashValue(), FINAL_CASH);
+            Assert.AreEqual(player.GetNetWorth(), FINAL_NET_WORTH);
+        }
+
+        [TestMethod]
+        public void PlayerCollectsCorrectDividendsWhenThreeDividendStocksOwned()
+        {
+            const int FINAL_CASH = 2600;
+            const int FINAL_NET_WORTH = 5600;
+            const int DIVIDEND_AMOUNT = 20;
+            const int NUM_POSITIONS_TO_BUY = 3;
+            StockId purchaseStock = StockId.BONDS;
+            string playerName = "Cool Guy";
+            Player player = new Player(playerName);
+
+            try
+            {
+                player.BuyPosition(purchaseStock, NUM_POSITIONS_TO_BUY);
+            }
+            catch (ArgumentException)
+            {
+                Assert.Fail();
+            }
+            player.CollectDividends(purchaseStock, DIVIDEND_AMOUNT);
+
+            Assert.AreEqual(player.GetCashValue(), FINAL_CASH);
+            Assert.AreEqual(player.GetNetWorth(), FINAL_NET_WORTH);
+        }
     }
 }

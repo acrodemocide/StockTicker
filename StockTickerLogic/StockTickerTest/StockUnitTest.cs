@@ -11,7 +11,7 @@ namespace StockTickerTest
         [TestMethod]
         public void CanGetStockInstance()
         {
-            Stock stock = Stock.GetStockInstance(StockId.GOLD);
+            Stock stock = new Stock(StockId.GOLD);
             Assert.AreNotEqual(stock, null);
         }
 
@@ -19,7 +19,7 @@ namespace StockTickerTest
         public void ResetSetsValueBackToStartValue()
         {
             int newValue = 2000;
-            Stock stock = Stock.GetStockInstance(StockId.GOLD);
+            Stock stock = new Stock(StockId.GOLD);
             stock.Value = newValue;
             stock.Reset();
             Assert.AreEqual(stock.Value, START_VALUE);

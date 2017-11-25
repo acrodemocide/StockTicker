@@ -6,23 +6,23 @@ namespace StockTickerLogic
     class Game
     {
         private List<Player> _players;
-        private StockMarket _stockMarket;
+        private IStockMarket _stockMarket;
         private bool _isGameInProgress;
         private bool _isNewGame;
         private static Game _instance = null;
 
-        private Game()
+        public Game(IStockMarket stockMarket)
         {
-            _stockMarket = StockMarket.GetStockBoard();
+            _stockMarket = stockMarket;
             _players = new List<Player>();
             _isGameInProgress = false;
         }
 
-        public static Game GetGame()
+        public static Game GetGame(IStockMarket stockMarket)
         {
             if (_instance == null)
             {
-                _instance = new Game();
+                _instance = new Game(stockMarket);
             }
             return _instance;
         }

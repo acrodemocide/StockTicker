@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StockTickerLogic;
 
@@ -7,12 +8,26 @@ namespace StockTickerTest
     [TestClass]
     public class PlayerIntegrationTests
     {
-        const int STARTING_CASH = 5000;
+        private const int STARTING_CASH = 5000;
+        private IDictionary<StockId, IStockPosition> _portfolio;
+
+        [TestInitialize()]
+        public void Initialize()
+        {
+            _portfolio = new Dictionary<StockId, IStockPosition>();
+            _portfolio[StockId.GOLD] = new StockPosition(new Stock(StockId.GOLD));
+            _portfolio[StockId.SILVER] = new StockPosition(new Stock(StockId.SILVER));
+            _portfolio[StockId.OIL] = new StockPosition(new Stock(StockId.OIL));
+            _portfolio[StockId.BONDS] = new StockPosition(new Stock(StockId.BONDS));
+            _portfolio[StockId.INDUSTRY] = new StockPosition(new Stock(StockId.INDUSTRY));
+            _portfolio[StockId.GRAIN] = new StockPosition(new Stock(StockId.GRAIN));
+        }
+
         [TestMethod]
         public void PlayerCorrectlyInitialized()
         {
             string playerName = "Cool Guy";
-            Player player = new Player(playerName);
+            Player player = new Player(playerName, _portfolio);
             Assert.AreEqual(player.GetCashValue(), STARTING_CASH);
             Assert.AreEqual(player.GetNetWorth(), STARTING_CASH);
         }
@@ -24,7 +39,7 @@ namespace StockTickerTest
             const int REMAINING_CASH = 4000;
             const int TOTAL_NET_WORTH = 5000;
             string playerName = "Cool Guy";
-            Player player = new Player(playerName);
+            Player player = new Player(playerName, _portfolio);
             player.BuyPosition(StockId.GOLD, NUM_POSITIONS);
             Assert.AreEqual(player.GetCashValue(), REMAINING_CASH);
             Assert.AreEqual(player.GetNetWorth(), TOTAL_NET_WORTH);
@@ -37,7 +52,7 @@ namespace StockTickerTest
             const int REMAINING_CASH = 4000;
             const int TOTAL_NET_WORTH = 5000;
             string playerName = "Cool Guy";
-            Player player = new Player(playerName);
+            Player player = new Player(playerName, _portfolio);
             player.BuyPosition(StockId.SILVER, NUM_POSITIONS);
             Assert.AreEqual(player.GetCashValue(), REMAINING_CASH);
             Assert.AreEqual(player.GetNetWorth(), TOTAL_NET_WORTH);
@@ -50,7 +65,7 @@ namespace StockTickerTest
             const int REMAINING_CASH = 4000;
             const int TOTAL_NET_WORTH = 5000;
             string playerName = "Cool Guy";
-            Player player = new Player(playerName);
+            Player player = new Player(playerName, _portfolio);
             player.BuyPosition(StockId.OIL, NUM_POSITIONS);
             Assert.AreEqual(player.GetCashValue(), REMAINING_CASH);
             Assert.AreEqual(player.GetNetWorth(), TOTAL_NET_WORTH);
@@ -63,7 +78,7 @@ namespace StockTickerTest
             const int REMAINING_CASH = 4000;
             const int TOTAL_NET_WORTH = 5000;
             string playerName = "Cool Guy";
-            Player player = new Player(playerName);
+            Player player = new Player(playerName, _portfolio);
             player.BuyPosition(StockId.BONDS, NUM_POSITIONS);
             Assert.AreEqual(player.GetCashValue(), REMAINING_CASH);
             Assert.AreEqual(player.GetNetWorth(), TOTAL_NET_WORTH);
@@ -76,7 +91,7 @@ namespace StockTickerTest
             const int REMAINING_CASH = 4000;
             const int TOTAL_NET_WORTH = 5000;
             string playerName = "Cool Guy";
-            Player player = new Player(playerName);
+            Player player = new Player(playerName, _portfolio);
             player.BuyPosition(StockId.INDUSTRY, NUM_POSITIONS);
             Assert.AreEqual(player.GetCashValue(), REMAINING_CASH);
             Assert.AreEqual(player.GetNetWorth(), TOTAL_NET_WORTH);
@@ -89,7 +104,7 @@ namespace StockTickerTest
             const int REMAINING_CASH = 4000;
             const int TOTAL_NET_WORTH = 5000;
             string playerName = "Cool Guy";
-            Player player = new Player(playerName);
+            Player player = new Player(playerName, _portfolio);
             player.BuyPosition(StockId.GRAIN, NUM_POSITIONS);
             Assert.AreEqual(player.GetCashValue(), REMAINING_CASH);
             Assert.AreEqual(player.GetNetWorth(), TOTAL_NET_WORTH);
@@ -102,7 +117,7 @@ namespace StockTickerTest
             const int REMAINING_CASH = 0;
             const int TOTAL_NET_WORTH = 5000;
             string playerName = "Cool Guy";
-            Player player = new Player(playerName);
+            Player player = new Player(playerName, _portfolio);
             player.BuyPosition(StockId.GRAIN, NUM_POSITIONS);
             Assert.AreEqual(player.GetCashValue(), REMAINING_CASH);
             Assert.AreEqual(player.GetNetWorth(), TOTAL_NET_WORTH);
@@ -114,7 +129,7 @@ namespace StockTickerTest
             const int NUM_POSITIONS = 6;
             const string ERROR_MESSAGE = "Not enough money";
             string playerName = "Cool Guy";
-            Player player = new Player(playerName);
+            Player player = new Player(playerName, _portfolio);
             try
             {
                 player.BuyPosition(StockId.GRAIN, NUM_POSITIONS);
@@ -134,7 +149,7 @@ namespace StockTickerTest
             const int TOTAL_CASH = 5000;
             const int TOTAL_NET_WORTH = 5000;
             string playerName = "Cool Guy";
-            Player player = new Player(playerName);
+            Player player = new Player(playerName, _portfolio);
             try
             {
                 player.BuyPosition(StockId.GOLD, NUM_POSITIONS);
@@ -163,7 +178,7 @@ namespace StockTickerTest
             const int TOTAL_CASH = 5000;
             const int TOTAL_NET_WORTH = 5000;
             string playerName = "Cool Guy";
-            Player player = new Player(playerName);
+            Player player = new Player(playerName, _portfolio);
             try
             {
                 player.BuyPosition(StockId.SILVER, NUM_POSITIONS);
@@ -192,7 +207,7 @@ namespace StockTickerTest
             const int TOTAL_CASH = 5000;
             const int TOTAL_NET_WORTH = 5000;
             string playerName = "Cool Guy";
-            Player player = new Player(playerName);
+            Player player = new Player(playerName, _portfolio);
             try
             {
                 player.BuyPosition(StockId.OIL, NUM_POSITIONS);
@@ -221,7 +236,7 @@ namespace StockTickerTest
             const int TOTAL_CASH = 5000;
             const int TOTAL_NET_WORTH = 5000;
             string playerName = "Cool Guy";
-            Player player = new Player(playerName);
+            Player player = new Player(playerName, _portfolio);
             try
             {
                 player.BuyPosition(StockId.BONDS, NUM_POSITIONS);
@@ -250,7 +265,7 @@ namespace StockTickerTest
             const int TOTAL_CASH = 5000;
             const int TOTAL_NET_WORTH = 5000;
             string playerName = "Cool Guy";
-            Player player = new Player(playerName);
+            Player player = new Player(playerName, _portfolio);
             try
             {
                 player.BuyPosition(StockId.INDUSTRY, NUM_POSITIONS);
@@ -279,7 +294,7 @@ namespace StockTickerTest
             const int TOTAL_CASH = 5000;
             const int TOTAL_NET_WORTH = 5000;
             string playerName = "Cool Guy";
-            Player player = new Player(playerName);
+            Player player = new Player(playerName, _portfolio);
             try
             {
                 player.BuyPosition(StockId.GRAIN, NUM_POSITIONS);
@@ -308,7 +323,7 @@ namespace StockTickerTest
             const int TOTAL_CASH = 5000;
             const int TOTAL_NET_WORTH = 5000;
             string playerName = "Cool Guy";
-            Player player = new Player(playerName);
+            Player player = new Player(playerName, _portfolio);
             try
             {
                 player.BuyPosition(StockId.GRAIN, NUM_POSITIONS);
@@ -337,7 +352,7 @@ namespace StockTickerTest
             const int NUM_POSITIONS_TO_SELL = 6;
             string ERROR_MESSAGE = "Not enough stocks to sell";
             string playerName = "Cool Guy";
-            Player player = new Player(playerName);
+            Player player = new Player(playerName, _portfolio);
             try
             {
                 player.BuyPosition(StockId.GRAIN, NUM_POSITIONS_TO_BUY);
@@ -365,7 +380,7 @@ namespace StockTickerTest
             const int TOTAL_NET_WORTH = 5000;
             const int DIVIDEND_AMOUNT = 20;
             string playerName = "Cool Guy";
-            Player player = new Player(playerName);
+            Player player = new Player(playerName, _portfolio);
 
             player.CollectDividends(StockId.BONDS, DIVIDEND_AMOUNT);
 
@@ -382,7 +397,7 @@ namespace StockTickerTest
             const int NUM_POSITIONS_TO_BUY = 1;
             StockId purchaseStock = StockId.BONDS;
             string playerName = "Cool Guy";
-            Player player = new Player(playerName);
+            Player player = new Player(playerName, _portfolio);
 
             try
             {
@@ -407,7 +422,7 @@ namespace StockTickerTest
             const int NUM_POSITIONS_TO_BUY = 3;
             StockId purchaseStock = StockId.BONDS;
             string playerName = "Cool Guy";
-            Player player = new Player(playerName);
+            Player player = new Player(playerName, _portfolio);
 
             try
             {

@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace StockTickerLogic
 {
-    class StockPosition
+    class StockPosition: IStockPosition
     {
-        private Stock _stockOwned;
+        private IStock _stockOwned;
         private int _numberOwned;
         private const int _DIVIDEND_MULTIPLIER = 10;
 
-        public StockPosition(StockId id)
+        public StockPosition(IStock stockOwned)
         {
-            _stockOwned = Stock.GetStockInstance(id);
+            _stockOwned = stockOwned;
             _numberOwned = 0;
         }
 

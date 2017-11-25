@@ -6,27 +6,23 @@ namespace StockTickerLogic
     class Player : IObserver
     {
         private string _name;
-        private Dictionary<StockId, StockPosition> _portfolio;
+        // _portfolio holds all the possible stock positions a player can have
+        //  in a game. If the player does not own a stock, then the stock
+        //  stock position for that particular stock will indicate 0 are owned.
+        private IDictionary<StockId, IStockPosition> _portfolio;
         private int _cash;
 
-        public Player(string name)
+        public Player(string name, IDictionary<StockId, IStockPosition> portfolio)
         {
             _name = name;
             _cash = 5000;
-
-            _portfolio = new Dictionary<StockId, StockPosition>();
-            _portfolio[StockId.GOLD] = new StockPosition(StockId.GOLD);
-            _portfolio[StockId.SILVER] = new StockPosition(StockId.SILVER);
-            _portfolio[StockId.OIL] = new StockPosition(StockId.OIL);
-            _portfolio[StockId.BONDS] = new StockPosition(StockId.BONDS);
-            _portfolio[StockId.INDUSTRY] = new StockPosition(StockId.INDUSTRY);
-            _portfolio[StockId.GRAIN] = new StockPosition(StockId.GRAIN);
-    }
+            _portfolio = portfolio;
+        }
 
         public void BuyPosition(StockId stockId, int numberOfStocks)
         {
-            Stock stockToPurchase = Stock.GetStockInstance(stockId);
-            int cost = stockToPurchase.Value * numberOfStocks;
+            var stockToPurchase = _portfolio[stockId];
+            int cost = stockToPurchase.GetShareValue() * numberOfStocks;
             if (cost <= _cash)
             {
                 _cash -= cost;
@@ -66,7 +62,7 @@ namespace StockTickerLogic
         public int GetNetWorth()
         {
             int totalValue = _cash;
-            foreach (KeyValuePair<StockId, StockPosition> entry in _portfolio)
+            foreach (KeyValuePair<StockId, IStockPosition> entry in _portfolio)
             {
                 totalValue += entry.Value.GetTotalValue();
             }

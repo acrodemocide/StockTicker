@@ -61,12 +61,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="GameTest.cs" />
     <Compile Include="PlayerIntegrationTests.cs" />
-    <Compile Include="PlayerUnitTeests.cs" />
-    <Compile Include="StockPositionUnitTests.cs" />
+    <Compile Include="PlayerUnitTests.cs" />
+    <Compile Include="StockPositionIntegrationTests.cs" />
     <Compile Include="StockTickerIntegrationTests.cs" />
     <Compile Include="StockUnitTest.cs" />
-    <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

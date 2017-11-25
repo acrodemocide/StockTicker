@@ -3,23 +3,23 @@ using System.Collections.Generic;
 
 namespace StockTickerLogic
 {
-    class StockMarket : ISubject
+    internal class StockMarket : ISubject, IStockMarket
     {
         private const int DIVIDEND_MIN_VALUE = 1000;
         private List<IObserver> _observers;
-        private Dictionary<StockId, Stock> _stocks;
+        private IDictionary<StockId, IStock> _stocks;
         private static StockMarket instance = null;
 
         private StockMarket()
         {
             _observers = new List<IObserver>();
-            _stocks = new Dictionary<StockId, Stock>();
-            _stocks[StockId.GOLD] = Stock.GetStockInstance(StockId.GOLD);
-            _stocks[StockId.SILVER] = Stock.GetStockInstance(StockId.SILVER);
-            _stocks[StockId.OIL] = Stock.GetStockInstance(StockId.OIL);
-            _stocks[StockId.BONDS] = Stock.GetStockInstance(StockId.BONDS);
-            _stocks[StockId.INDUSTRY] = Stock.GetStockInstance(StockId.INDUSTRY);
-            _stocks[StockId.GRAIN] = Stock.GetStockInstance(StockId.GRAIN);
+            _stocks = new Dictionary<StockId, IStock>();
+            _stocks[StockId.GOLD] = new Stock(StockId.GOLD);
+            _stocks[StockId.SILVER] = new Stock(StockId.SILVER);
+            _stocks[StockId.OIL] = new Stock(StockId.OIL);
+            _stocks[StockId.BONDS] = new Stock(StockId.BONDS);
+            _stocks[StockId.INDUSTRY] = new Stock(StockId.INDUSTRY);
+            _stocks[StockId.GRAIN] = new Stock(StockId.GRAIN);
         }
 
         public static StockMarket GetStockBoard()
@@ -36,7 +36,7 @@ namespace StockTickerLogic
             _stocks[stockId].Value += incrementValue;
         }
 
-        public void MarketMovement()
+        public virtual void MarketMovement()
         {
             const int FIVE = 1;
             const int TEN = 2;
@@ -98,7 +98,7 @@ namespace StockTickerLogic
         public void Reset()
         {
             _observers.Clear();
-            foreach(KeyValuePair<StockId, Stock> entry in _stocks)
+            foreach(KeyValuePair<StockId, IStock> entry in _stocks)
             {
                 entry.Value.Reset();
             }

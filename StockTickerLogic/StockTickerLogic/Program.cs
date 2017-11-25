@@ -12,7 +12,7 @@ namespace StockTickerLogic
     {
         static void Main(string[] args)
         {
-            Game game = Game.GetGame();
+            Game game = Game.GetGame(StockMarket.GetStockBoard());
             Console.WriteLine("Welcome to StockTicker");
             Console.WriteLine("In this game, players can buy and sell stocks to increase their net worth");
             Console.WriteLine("Your net worth goes up when you collect dividends or when your stocks increase in value");

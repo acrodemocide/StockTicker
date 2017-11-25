@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StockTickerLogic;
 
 namespace StockTickerTest
@@ -6,18 +7,32 @@ namespace StockTickerTest
     [TestClass]
     public class StockTickerIntegrationTests
     {
+        private IDictionary<StockId, IStockPosition> _portfolio;
+
+        [TestInitialize()]
+        public void Initialize()
+        {
+            _portfolio = new Dictionary<StockId, IStockPosition>();
+            _portfolio[StockId.GOLD] = new StockPosition(new Stock(StockId.GOLD));
+            _portfolio[StockId.SILVER] = new StockPosition(new Stock(StockId.SILVER));
+            _portfolio[StockId.OIL] = new StockPosition(new Stock(StockId.OIL));
+            _portfolio[StockId.BONDS] = new StockPosition(new Stock(StockId.BONDS));
+            _portfolio[StockId.INDUSTRY] = new StockPosition(new Stock(StockId.INDUSTRY));
+            _portfolio[StockId.GRAIN] = new StockPosition(new Stock(StockId.GRAIN));
+        }
+
         [TestMethod]
         public void BasicGameTest()
         {
             const int STARTING_NET_WORTH = 5000;
-            Game game = Game.GetGame();
+            Game game = Game.GetGame(StockMarket.GetStockBoard());
             game.NewGame();
-            Player player1 = new Player("Bob");
-            Player player2 = new Player("Joe");
-            Player player3 = new Player("Fred");
-            Player player4 = new Player("Sue");
-            Player player5 = new Player("Jane");
-            Player player6 = new Player("Ann");
+            Player player1 = new Player("Bob", _portfolio);
+            Player player2 = new Player("Joe", _portfolio);
+            Player player3 = new Player("Fred", _portfolio);
+            Player player4 = new Player("Sue", _portfolio);
+            Player player5 = new Player("Jane", _portfolio);
+            Player player6 = new Player("Ann", _portfolio);
             Assert.AreEqual(player1.GetNetWorth(), STARTING_NET_WORTH);
             Assert.AreEqual(player2.GetNetWorth(), STARTING_NET_WORTH);
             Assert.AreEqual(player3.GetNetWorth(), STARTING_NET_WORTH);

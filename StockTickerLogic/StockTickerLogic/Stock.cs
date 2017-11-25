@@ -7,26 +7,16 @@ using System.Threading.Tasks;
 
 namespace StockTickerLogic
 {
-    class Stock
+    class Stock: IStock
     {
         private const int START_VALUE = 1000;
         private StockId _id;
         private int _value;
-        private static Stock instance = null;
 
-        private Stock(StockId id)
+        public Stock(StockId id)
         {
             _id = id;
             _value = START_VALUE;
-        }
-
-        public static Stock GetStockInstance(StockId id)
-        {
-            if (instance == null)
-            {
-                instance = new Stock(id);
-            }
-            return instance;
         }
 
         public int Value
@@ -41,6 +31,10 @@ namespace StockTickerLogic
             }
         }
 
+        /// <summary>
+        /// Resets the stock to its initial value for the start
+        /// of the game.
+        /// </summary>
         public void Reset()
         {
             _value = START_VALUE;

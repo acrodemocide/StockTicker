@@ -9,98 +9,202 @@ namespace StockTickerTest
     [TestClass]
     public class PlayerUnitTests
     {
-        [TestMethod]
-        public void BuyPosition_SingleStock_ValueEqualsCash_Test()
+        private IDictionary<StockId, IStockPosition> _portfolio;
+
+        [TestInitialize]
+        private void TestInitialize()
         {
-            int endingCashValue = 0;
-            StockId stockToBuy = StockId.BONDS;
-            int numberOfStocksToBuy = 1;
-            string playerName = "test";
-            Mock<IDictionary<StockId, IStockPosition>> mockPortfolio = new Mock<IDictionary<StockId, IStockPosition>>();
+            
+        }
+
+        [TestCleanup]
+        private void TestCleanup()
+        {
+            _portfolio = null;
+        }
+
+        [TestMethod]
+        public void BuyPosition_ValueEqualsCash_Test()
+        {
+            const StockId StockToBuy = StockId.BONDS;
+            const int TestShareValue = 5000;
+            const int EndingCashValue = 0;
+            const int NumberOfStocksToBuy = 1;
+            const string PlayerName = "test";
+            IDictionary<StockId, IStockPosition> mockPortfolio = new Dictionary<StockId, IStockPosition>();
             Mock<IStockPosition> mockStockPosition = new Mock<IStockPosition>();
-            List<StockId> mockDictionaryKeys = new List<StockId>();
-            mockDictionaryKeys.Add(StockId.BONDS);
-            List<IStockPosition> mockDicationaryValues = new List<IStockPosition>();
-            mockDicationaryValues.Add(mockStockPosition.Object);
-            int testShareValue = 5000;
-            mockStockPosition.Setup(x => x.GetShareValue()).Returns(testShareValue);
-            mockPortfolio.SetupGet(x => x[It.IsAny<StockId>()]).Returns(mockStockPosition.Object);
-            mockPortfolio.SetupGet(x => x.Keys).Returns(mockDictionaryKeys);
-            mockPortfolio.SetupGet(x => x.Values).Returns(mockDicationaryValues);
-            Player player = new Player(playerName, mockPortfolio.Object);
+            mockStockPosition.Setup(x => x.GetShareValue()).Returns(TestShareValue);
+            mockPortfolio[StockToBuy] = mockStockPosition.Object;
+            Player player = new Player(PlayerName, mockPortfolio);
 
             try
             {
-                player.BuyPosition(stockToBuy, numberOfStocksToBuy);
+                player.BuyPosition(StockToBuy, NumberOfStocksToBuy);
             }
             catch (ArgumentException)
             {
                 Assert.Fail();
             }
 
-            Assert.AreEqual(player.GetCashValue(), endingCashValue);
+            Assert.AreEqual(player.GetCashValue(), EndingCashValue);
         }
 
         [TestMethod]
         public void BuyPosition_NumberToBuyIsZero_Test()
         {
-            int endingCashValue = 5000;
-            StockId stockToBuy = StockId.BONDS;
-            int numberOfStocksToBuy = 0;
-            string playerName = "test";
-            Mock<IDictionary<StockId, IStockPosition>> mockPortfolio = new Mock<IDictionary<StockId, IStockPosition>>();
+            const StockId StockToBuy = StockId.BONDS;
+            const int TestShareValue = 5000;
+            const int EndingCashValue = 5000;
+            const int NumberOfStocksToBuy = 0;
+            const string PlayerName = "test";
+            IDictionary<StockId, IStockPosition> mockPortfolio = new Dictionary<StockId, IStockPosition>();
             Mock<IStockPosition> mockStockPosition = new Mock<IStockPosition>();
-            List<StockId> mockDictionaryKeys = new List<StockId>();
-            mockDictionaryKeys.Add(StockId.BONDS);
-            List<IStockPosition> mockDicationaryValues = new List<IStockPosition>();
-            mockDicationaryValues.Add(mockStockPosition.Object);
-            int testShareValue = 5000;
-            mockStockPosition.Setup(x => x.GetShareValue()).Returns(testShareValue);
-            mockPortfolio.SetupGet(x => x[It.IsAny<StockId>()]).Returns(mockStockPosition.Object);
-            mockPortfolio.SetupGet(x => x.Keys).Returns(mockDictionaryKeys);
-            mockPortfolio.SetupGet(x => x.Values).Returns(mockDicationaryValues);
-            Player player = new Player(playerName, mockPortfolio.Object);
+            mockStockPosition.Setup(x => x.GetShareValue()).Returns(TestShareValue);
+            mockPortfolio[StockToBuy] = mockStockPosition.Object;
+            Player player = new Player(PlayerName, mockPortfolio);
 
             try
             {
-                player.BuyPosition(stockToBuy, numberOfStocksToBuy);
+                player.BuyPosition(StockToBuy, NumberOfStocksToBuy);
             }
             catch (ArgumentException)
             {
                 Assert.Fail();
             }
-            Assert.AreEqual(player.GetCashValue(), endingCashValue);
+
+            Assert.AreEqual(player.GetCashValue(), EndingCashValue);
         }
 
         [TestMethod]
-        public void BuyPosition_NumberToBuyIsOne_ValueLessThanCash_Test()
+        public void BuyPosition_ValueLessThanCash_Test()
         {
-            int endingCashValue = 1000;
-            StockId stockToBuy = StockId.BONDS;
-            int numberOfStocksToBuy = 1;
-            string playerName = "test";
-            Mock<IDictionary<StockId, IStockPosition>> mockPortfolio = new Mock<IDictionary<StockId, IStockPosition>>();
+            const StockId StockToBuy = StockId.BONDS;
+            const int TestShareValue = 4000;
+            const int EndingCashValue = 1000;
+            const int NumberOfStocksToBuy = 1;
+            const string PlayerName = "test";
+            IDictionary<StockId, IStockPosition> mockPortfolio = new Dictionary<StockId, IStockPosition>();
             Mock<IStockPosition> mockStockPosition = new Mock<IStockPosition>();
-            List<StockId> mockDictionaryKeys = new List<StockId>();
-            mockDictionaryKeys.Add(StockId.BONDS);
-            List<IStockPosition> mockDicationaryValues = new List<IStockPosition>();
-            mockDicationaryValues.Add(mockStockPosition.Object);
-            int testShareValue = 4000;
-            mockStockPosition.Setup(x => x.GetShareValue()).Returns(testShareValue);
-            mockPortfolio.SetupGet(x => x[It.IsAny<StockId>()]).Returns(mockStockPosition.Object);
-            mockPortfolio.SetupGet(x => x.Keys).Returns(mockDictionaryKeys);
-            mockPortfolio.SetupGet(x => x.Values).Returns(mockDicationaryValues);
-            Player player = new Player(playerName, mockPortfolio.Object);
+            mockStockPosition.Setup(x => x.GetShareValue()).Returns(TestShareValue);
+            mockPortfolio[StockToBuy] = mockStockPosition.Object;
+            Player player = new Player(PlayerName, mockPortfolio);
 
             try
             {
-                player.BuyPosition(stockToBuy, numberOfStocksToBuy);
+                player.BuyPosition(StockToBuy, NumberOfStocksToBuy);
             }
             catch (ArgumentException)
             {
                 Assert.Fail();
             }
-            Assert.AreEqual(player.GetCashValue(), endingCashValue);
+
+            Assert.AreEqual(player.GetCashValue(), EndingCashValue);
+        }
+
+        [TestMethod]
+        public void BuyPosition_ValueGreaterThanCash_Test()
+        {
+            const StockId StockToBuy = StockId.BONDS;
+            const int TestShareValue = 6000;
+            const int EndingCashValue = 5000;
+            const int NumberOfStocksToBuy = 1;
+            const string PlayerName = "test";
+            IDictionary<StockId, IStockPosition> mockPortfolio = new Dictionary<StockId, IStockPosition>();
+            Mock<IStockPosition> mockStockPosition = new Mock<IStockPosition>();
+            mockStockPosition.Setup(x => x.GetShareValue()).Returns(TestShareValue);
+            mockPortfolio[StockToBuy] = mockStockPosition.Object;
+            Player player = new Player(PlayerName, mockPortfolio);
+
+            try
+            {
+                player.BuyPosition(StockToBuy, NumberOfStocksToBuy);
+                Assert.Fail();
+            }
+            catch (ArgumentException)
+            {
+                Assert.AreEqual(player.GetCashValue(), EndingCashValue);
+            }
+        }
+
+        [TestMethod]
+        public void SellPostion_SellLessThanWhatIsOwned_Test()
+        {
+            const StockId StockOwned = StockId.BONDS;
+            const int ExpectedCashValue = 9000;
+            const int ShareValue = 1000;
+            const int NumberOfStocksOwned = 5;
+            const int NumberOfStocksToSell = 4;
+            const string PlayerName = "test";
+            IDictionary<StockId, IStockPosition> mockPortfolio = new Dictionary<StockId, IStockPosition>();
+            Mock<IStockPosition> mockStockPosition = new Mock<IStockPosition>();
+            mockStockPosition.Setup(x => x.GetShareValue()).Returns(ShareValue);
+            mockStockPosition.SetupGet(x => x.NumberOwned).Returns(NumberOfStocksOwned);
+            mockPortfolio[StockOwned] = mockStockPosition.Object;
+            Player player = new Player(PlayerName, mockPortfolio);
+
+            try
+            {
+                player.SellPosition(StockOwned, NumberOfStocksToSell);
+            }
+            catch(ArgumentException)
+            {
+                Assert.Fail();
+            }
+            Assert.AreEqual(ExpectedCashValue, player.GetCashValue());
+        }
+
+        [TestMethod]
+        public void SellPostion_SellAllThatIsOwned_Test()
+        {
+            const StockId StockOwned = StockId.BONDS;
+            const int ExpectedCashValue = 10000;
+            const int ShareValue = 1000;
+            const int NumberOfStocksOwned = 5;
+            const int NumberOfStocksToSell = 5;
+            const string PlayerName = "test";
+            IDictionary<StockId, IStockPosition> mockPortfolio = new Dictionary<StockId, IStockPosition>();
+            Mock<IStockPosition> mockStockPosition = new Mock<IStockPosition>();
+            mockStockPosition.Setup(x => x.GetShareValue()).Returns(ShareValue);
+            mockStockPosition.SetupGet(x => x.NumberOwned).Returns(NumberOfStocksOwned);
+            mockPortfolio[StockOwned] = mockStockPosition.Object;
+            Player player = new Player(PlayerName, mockPortfolio);
+
+            try
+            {
+                player.SellPosition(StockOwned, NumberOfStocksToSell);
+            }
+            catch (ArgumentException)
+            {
+                Assert.Fail();
+            }
+            Assert.AreEqual(ExpectedCashValue, player.GetCashValue());
+        }
+
+        [TestMethod]
+        public void SellPostion_SellMoreThanWhatIsOwned_Test()
+        {
+            const StockId StockOwned = StockId.BONDS;
+            const int ExpectedCashValue = 5000;
+            const int ShareValue = 1000;
+            const int NumberOfStocksOwned = 5;
+            const int NumberOfStocksToSell = 6;
+            const string PlayerName = "test";
+            IDictionary<StockId, IStockPosition> mockPortfolio = new Dictionary<StockId, IStockPosition>();
+            Mock<IStockPosition> mockStockPosition = new Mock<IStockPosition>();
+            mockStockPosition.Setup(x => x.GetShareValue()).Returns(ShareValue);
+            mockStockPosition.SetupGet(x => x.NumberOwned).Returns(NumberOfStocksOwned);
+            mockPortfolio[StockOwned] = mockStockPosition.Object;
+            Player player = new Player(PlayerName, mockPortfolio);
+
+            try
+            {
+                player.SellPosition(StockOwned, NumberOfStocksToSell);
+                Assert.Fail();
+            }
+            catch (ArgumentException)
+            {
+                Assert.AreEqual(ExpectedCashValue, player.GetCashValue());
+            }
         }
     }
 }

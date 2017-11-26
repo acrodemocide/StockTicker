@@ -7,18 +7,16 @@ namespace StockTickerTest
     [TestClass]
     public class StockTickerIntegrationTests
     {
-        private IDictionary<StockId, IStockPosition> _portfolio;
-
-        [TestInitialize()]
-        public void Initialize()
+        private IDictionary<StockId, IStockPosition> CreatePortfolio()
         {
-            _portfolio = new Dictionary<StockId, IStockPosition>();
-            _portfolio[StockId.GOLD] = new StockPosition(new Stock(StockId.GOLD));
-            _portfolio[StockId.SILVER] = new StockPosition(new Stock(StockId.SILVER));
-            _portfolio[StockId.OIL] = new StockPosition(new Stock(StockId.OIL));
-            _portfolio[StockId.BONDS] = new StockPosition(new Stock(StockId.BONDS));
-            _portfolio[StockId.INDUSTRY] = new StockPosition(new Stock(StockId.INDUSTRY));
-            _portfolio[StockId.GRAIN] = new StockPosition(new Stock(StockId.GRAIN));
+            var portfolio = new Dictionary<StockId, IStockPosition>();
+            portfolio[StockId.GOLD] = new StockPosition(new Stock(StockId.GOLD));
+            portfolio[StockId.SILVER] = new StockPosition(new Stock(StockId.SILVER));
+            portfolio[StockId.OIL] = new StockPosition(new Stock(StockId.OIL));
+            portfolio[StockId.BONDS] = new StockPosition(new Stock(StockId.BONDS));
+            portfolio[StockId.INDUSTRY] = new StockPosition(new Stock(StockId.INDUSTRY));
+            portfolio[StockId.GRAIN] = new StockPosition(new Stock(StockId.GRAIN));
+            return portfolio;
         }
 
         [TestMethod]
@@ -27,12 +25,18 @@ namespace StockTickerTest
             const int STARTING_NET_WORTH = 5000;
             Game game = Game.GetGame(StockMarket.GetStockBoard());
             game.NewGame();
-            Player player1 = new Player("Bob", _portfolio);
-            Player player2 = new Player("Joe", _portfolio);
-            Player player3 = new Player("Fred", _portfolio);
-            Player player4 = new Player("Sue", _portfolio);
-            Player player5 = new Player("Jane", _portfolio);
-            Player player6 = new Player("Ann", _portfolio);
+            var player1Portfolio = CreatePortfolio();
+            Player player1 = new Player("Bob", player1Portfolio);
+            var player2Portfolio = CreatePortfolio();
+            Player player2 = new Player("Joe", player2Portfolio);
+            var player3Portfolio = CreatePortfolio();
+            Player player3 = new Player("Fred", player3Portfolio);
+            var player4Portfolio = CreatePortfolio();
+            Player player4 = new Player("Sue", player4Portfolio);
+            var player5Portfolio = CreatePortfolio();
+            Player player5 = new Player("Jane", player5Portfolio);
+            var player6Portfolio = CreatePortfolio();
+            Player player6 = new Player("Ann", player6Portfolio);
             Assert.AreEqual(player1.GetNetWorth(), STARTING_NET_WORTH);
             Assert.AreEqual(player2.GetNetWorth(), STARTING_NET_WORTH);
             Assert.AreEqual(player3.GetNetWorth(), STARTING_NET_WORTH);

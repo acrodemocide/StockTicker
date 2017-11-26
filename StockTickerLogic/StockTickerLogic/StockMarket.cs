@@ -10,23 +10,17 @@ namespace StockTickerLogic
         private IDictionary<StockId, IStock> _stocks;
         private static StockMarket instance = null;
 
-        private StockMarket()
+        private StockMarket(IDictionary<StockId, IStock> stocks)
         {
             _observers = new List<IObserver>();
-            _stocks = new Dictionary<StockId, IStock>();
-            _stocks[StockId.GOLD] = new Stock(StockId.GOLD);
-            _stocks[StockId.SILVER] = new Stock(StockId.SILVER);
-            _stocks[StockId.OIL] = new Stock(StockId.OIL);
-            _stocks[StockId.BONDS] = new Stock(StockId.BONDS);
-            _stocks[StockId.INDUSTRY] = new Stock(StockId.INDUSTRY);
-            _stocks[StockId.GRAIN] = new Stock(StockId.GRAIN);
+            _stocks = stocks;
         }
 
-        public static StockMarket GetStockBoard()
+        public static StockMarket GetStockMarket(IDictionary<StockId, IStock> stocks)
         {
             if (instance == null)
             {
-                instance = new StockMarket();
+                instance = new StockMarket(stocks);
             }
             return instance;
         }

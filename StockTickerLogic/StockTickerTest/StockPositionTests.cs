@@ -6,7 +6,7 @@ using StockTickerLogic;
 namespace StockTickerTest
 {
     [TestClass]
-    public class StockPositionIntegrationTests
+    public class StockPositionTests
     {
         const int STARTING_VALUE = 1000;
         [TestMethod]

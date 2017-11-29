@@ -45,17 +45,23 @@
   <ItemGroup>
     <Compile Include="Game.cs" />
     <Compile Include="Interfaces\IObserver.cs" />
+    <Compile Include="Interfaces\IPlayerTO.cs" />
     <Compile Include="Interfaces\IStock.cs" />
     <Compile Include="Interfaces\IStockMarket.cs" />
     <Compile Include="Interfaces\IStockPosition.cs" />
+    <Compile Include="Interfaces\IStockPositionTO.cs" />
+    <Compile Include="Interfaces\IStockTO.cs" />
     <Compile Include="Interfaces\ISubject.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="PlayerTO.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stock.cs" />
     <Compile Include="StockId.cs" />
     <Compile Include="StockPosition.cs" />
     <Compile Include="StockMarket.cs" />
+    <Compile Include="StockPositionTO.cs" />
+    <Compile Include="StockTO.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

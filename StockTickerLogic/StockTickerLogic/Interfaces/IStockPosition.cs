@@ -13,6 +13,7 @@ namespace StockTickerLogic
         int GetShareValue();
         int GetTotalValue();
         int GetDividenPayout(int dividendAmount);
+        IStock GetStockOwned();
         int NumberOwned { get; set; }
     }
 }

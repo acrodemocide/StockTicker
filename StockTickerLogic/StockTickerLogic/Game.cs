@@ -1,20 +1,29 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
+using StockTickerLogic.Interfaces;
 
 namespace StockTickerLogic
 {
     /// <summary>
-    /// We need to update this so that we can get the necessary information
-    /// for seeing players to determine who is winning, what each person's
-    /// net worth is, and to see the stock market. We want the game
-    /// to be the facade, so we don't want the user to be able to
-    /// see any of the components that the game is using to play.
-    /// However, to return data, we might create POCO's that clearly
-    /// define everything so that the user can clearly see what is
-    /// going on at any point in the game. The integration tests for this
-    /// should be updated accordingly.
+    /// We have created the transfer objects needed to communicate with the
+    /// outside world as well as the public methods here that are needed to
+    /// interact with the game.
+    /// 
+    /// We will need to go through the module and ensure that all the classes
+    /// that are supposed to be internal only are explicitly marked as such.
+    /// We need to also explicitly designate the classes that are supposed to
+    /// be public.
+    /// 
+    /// We will need to finish implementing the public methods for the facade
+    /// and write tests for each of them. The methods created should be documented
+    /// in both the concrete class and the interface. An interface should be
+    /// created for the game class so that extensions can be made.
+    /// 
+    /// Once this is done, the stock ticker logical side (the game logic without
+    /// the UI) will be finished and ready to be used by a UI.
     /// </summary>
-    class Game
+    public class Game
     {
         private List<Player> _players;
         private IStockMarket _stockMarket;
@@ -132,19 +141,77 @@ namespace StockTickerLogic
             }
         }
 
+        private IPlayerTO CopyPlayerToPlayerTO(Player player)
+        {
+            var playerTo = new PlayerTO();
+
+            playerTo.Name = player.GetName();
+
+            var playerPortfolio = player.GetPortfolio();
+            var playerToPortfolio = new Dictionary<StockId, IStockPositionTO>();
+            foreach (var portfolioKeyValuePair in playerPortfolio)
+            {
+                var stockOwned = portfolioKeyValuePair.Value.GetStockOwned();
+                var stockTo = new StockTO();
+                stockTo.Id = stockOwned.Id;
+                stockTo.Value = stockOwned.Value;
+                var stockPositionTo = new StockPositionTO();
+                stockPositionTo.StockOwned = stockTo;
+                stockPositionTo.NumberOwned = portfolioKeyValuePair.Value.NumberOwned;
+                playerToPortfolio[stockTo.Id] = stockPositionTo;
+            }
+
+            playerTo.Cash = player.GetCashValue();
+
+            return playerTo;
+        }
+
         /// <summary>
         /// This returns a list of the players who are currently playing
         /// the game.
         /// </summary>
         /// <returns>List of players in the game</returns>
-        public List<string> GetPlayers()
+        public IQueryable<IPlayerTO> GetPlayers()
         {
-            var playerNames = new List<string>();
+            var playerTos = new List<IPlayerTO>();
             foreach(var player in _players)
             {
-                playerNames.Add(player.GetName());
+                var playerTo = CopyPlayerToPlayerTO(player);
+                playerTos.Add(playerTo);
             }
-            return playerNames;
+            return playerTos.AsQueryable();
+        }
+
+        /// <summary>
+        /// Returns a player given a name
+        /// </summary>
+        /// <param name="playerName">Name of the player to return</param>
+        public IPlayerTO GetPlayer(string playerName)
+        {
+            IPlayerTO playerTo = null;
+
+            var playersQueryable = _players.AsQueryable();
+            var player = playersQueryable.FirstOrDefault(x => x.GetName() == playerName);
+            if (player == null)
+            {
+                throw new ArgumentException("No player with that name exists in the game");
+            }
+            else
+            {
+                playerTo = CopyPlayerToPlayerTO(player);
+            }
+            
+            return playerTo;
+        }
+
+        public IQueryable<IStockTO> GetStocks()
+        {
+            throw new NotImplementedException("This is not yet implemented");
+        }
+
+        public IStockTO GetStock(StockId stockId)
+        {
+            throw new NotImplementedException("This is not yet implemented");
         }
 
         /// <summary>

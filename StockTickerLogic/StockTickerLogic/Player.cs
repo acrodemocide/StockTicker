@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace StockTickerLogic
 {
-    class Player : IObserver
+    internal class Player : IObserver
     {
         private string _name;
         // _portfolio holds all the possible stock positions a player can have
@@ -84,6 +84,11 @@ namespace StockTickerLogic
         public string GetName()
         {
             return _name;
+        }
+
+        public IDictionary<StockId, IStockPosition> GetPortfolio()
+        {
+            return _portfolio;
         }
     }
 }

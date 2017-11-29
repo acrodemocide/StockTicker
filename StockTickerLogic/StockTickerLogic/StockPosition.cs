@@ -33,6 +33,11 @@ namespace StockTickerLogic
             return dividendAmount * _DIVIDEND_MULTIPLIER * _numberOwned;
         }
 
+        public IStock GetStockOwned()
+        {
+            return _stockOwned;
+        }
+
         public int NumberOwned
         {
             get
@@ -44,5 +49,7 @@ namespace StockTickerLogic
                 _numberOwned = value;
             }
         }
+
+        
     }
 }

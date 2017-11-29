@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace StockTickerLogic
+﻿namespace StockTickerLogic
 {
-    class Stock: IStock
+    internal class Stock: IStock
     {
         private const int START_VALUE = 1000;
         private StockId _id;
@@ -28,6 +21,18 @@ namespace StockTickerLogic
             set
             {
                 _value = value;
+            }
+        }
+
+        public StockId Id
+        {
+            get
+            {
+                return _id;
+            }
+            private set
+            {
+                _id = value;
             }
         }
 

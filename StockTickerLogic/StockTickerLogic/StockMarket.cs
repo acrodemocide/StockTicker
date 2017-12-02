@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using StockTickerLogic.Interfaces;
 
 namespace StockTickerLogic
 {
@@ -96,6 +98,23 @@ namespace StockTickerLogic
             {
                 entry.Value.Reset();
             }
+        }
+
+        public IQueryable<IStockTO> GetStocks()
+        {
+            var stocksData = new List<IStockTO>();
+            foreach(var keyValuePair in _stocks)
+            {
+                stocksData.Add(keyValuePair.Value.GetStockData());
+            }
+            return stocksData.AsQueryable();
+        }
+
+        public IStockTO GetStockById(StockId stockId)
+        {
+            var stockTo = new StockTO();
+            stockTo = (StockTO)_stocks[stockId].GetStockData();
+            return stockTo;
         }
     }
 }

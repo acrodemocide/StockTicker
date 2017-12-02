@@ -206,12 +206,12 @@ namespace StockTickerLogic
 
         public IQueryable<IStockTO> GetStocks()
         {
-            throw new NotImplementedException("This is not yet implemented");
+            return _stockMarket.GetStocks();
         }
 
         public IStockTO GetStock(StockId stockId)
         {
-            throw new NotImplementedException("This is not yet implemented");
+            return _stockMarket.GetStockById(stockId);
         }
 
         /// <summary>

@@ -1,4 +1,6 @@
-﻿namespace StockTickerLogic
+﻿using StockTickerLogic.Interfaces;
+
+namespace StockTickerLogic
 {
     internal class Stock: IStock
     {
@@ -43,6 +45,14 @@
         public void Reset()
         {
             _value = START_VALUE;
+        }
+
+        public IStockTO GetStockData()
+        {
+            var stockData = new StockTO();
+            stockData.Id = _id;
+            stockData.Value = _value;
+            return stockData;
         }
     }
 }

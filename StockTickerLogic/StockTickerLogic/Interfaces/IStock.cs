@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using StockTickerLogic.Interfaces;
 
 namespace StockTickerLogic
 {
@@ -13,7 +9,8 @@ namespace StockTickerLogic
         /// the start of the game.
         /// </summary>
         void Reset();
-        StockId Id { get; set; }
+        StockId Id { get; }
         int Value { get; set; }
+        IStockTO GetStockData();
     }
 }

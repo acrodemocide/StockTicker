@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
 namespace StockTickerLogic
 {
-    interface IStockPosition
+    internal interface IStockPosition
     {
         int GetShareValue();
         int GetTotalValue();

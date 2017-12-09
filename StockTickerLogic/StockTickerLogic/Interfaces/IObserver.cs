@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StockTickerLogic
 {
-    interface IObserver
+    internal interface IObserver
     {
         void Update(StockId stockId, int amount);
     }

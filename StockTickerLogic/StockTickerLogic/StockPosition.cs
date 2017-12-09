@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StockTickerLogic
 {
-    class StockPosition: IStockPosition
+    internal class StockPosition: IStockPosition
     {
         private IStock _stockOwned;
         private int _numberOwned;

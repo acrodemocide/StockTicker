@@ -161,6 +161,7 @@ namespace StockTickerLogic
                 playerToPortfolio[stockTo.Id] = stockPositionTo;
             }
 
+            playerTo.Portfolio = playerToPortfolio;
             playerTo.Cash = player.GetCashValue();
 
             return playerTo;

@@ -7,5 +7,6 @@ namespace StockTickerLogic.Interfaces
         string Name { get; set; }
         IDictionary<StockId, IStockPositionTO> Portfolio { get; set; }
         int Cash { get; set; }
+        int GetNetWorth();
     }
 }
